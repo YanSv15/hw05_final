@@ -10,6 +10,8 @@ from django.urls import reverse
 from django.core.cache import cache
 
 from ..models import Group, Post, Comment
+from posts.forms import PostForm
+
 
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
@@ -29,6 +31,7 @@ class PostFormTests(TestCase):
             slug='test_slug',
             description='Тестовое описание группы',
         )
+        cls.form = PostForm()
 
     @classmethod
     def tearDownClass(cls):
@@ -45,12 +48,6 @@ class PostFormTests(TestCase):
 
     def test_authorized_user_create_post(self):
         """Проверка создания записи авторизированным пользователем."""
-        # Добрый Вечер! Снова вам пишу с вопросом для уточнения.
-        # Если я правильно понимаю, в поле ImageField модели Post невозможно
-        # загрузить то, что не является изображением. Поэтому решил уточнить
-        # у вас по поводу дополнительной проверки на загрузку в форму
-        # не-изображения. Заранее спасибо!
-
         posts_count = Post.objects.count()
         small_gif = (
             b'\x47\x49\x46\x38\x39\x61\x02\x00'
@@ -86,6 +83,7 @@ class PostFormTests(TestCase):
         self.assertEqual(post.text, form_data['text'])
         self.assertEqual(post.author, self.post_author)
         self.assertEqual(post.group_id, form_data['group'])
+        self.assertEqual(post.image.name, 'posts/small.gif')
 
     def test_authorized_user_edit_post(self):
         """Проверка редактирования записи авторизированным пользователем."""
