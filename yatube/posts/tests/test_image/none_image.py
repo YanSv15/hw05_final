@@ -1,1 +1,1 @@
-'test image'
+0x00
