@@ -32,6 +32,11 @@ class PostFormTests(TestCase):
             description='Тестовое описание группы',
         )
         cls.form = PostForm()
+        cls.post = Post.objects.create(
+            text='Тестовая запись',
+            author=cls.post_author,
+            group=cls.group,
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -128,3 +133,29 @@ class PostFormTests(TestCase):
         self.assertEqual(comment.post_id, post.id)
         self.assertRedirects(
             response, reverse('posts:post_detail', args={post.id}))
+
+    def test_create_post(self):
+        """Дополнительная проверка на загрузку не изображения."""
+        image = SimpleUploadedFile(
+            name='test_image.py',
+            content=open('static/img/test_image/image.py', 'rb').read(),
+            content_type='text/py'
+        )
+        form_data = {
+            'text': 'Новый тестовый текст',
+            'group': self.group.pk,
+            'image': image
+        }
+        response = self.authorized_user.post(
+            reverse('posts:post_create'),
+            data=form_data,
+            follow=True
+        )
+        self.assertFormError(
+            response,
+            'form',
+            'image',
+            'Загрузите правильное изображение. '
+            'Файл, который вы загрузили, поврежден или не '
+            'является изображением.'
+        )
