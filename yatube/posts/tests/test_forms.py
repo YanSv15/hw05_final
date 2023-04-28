@@ -136,8 +136,8 @@ class PostFormTests(TestCase):
     def test_create_post(self):
         """Дополнительная проверка на загрузку не изображения."""
         image = SimpleUploadedFile(
-            name='test_image.py',
-            content=open('yatube/test_image/none_image.py', 'rb').read(),
+            name='none_image.py',
+            content=open('posts/tests/test_image/none_image.py', 'rb').read(),
             content_type='text/py'
         )
         form_data = {
