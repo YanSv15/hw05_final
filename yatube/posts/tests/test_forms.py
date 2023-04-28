@@ -136,8 +136,15 @@ class PostFormTests(TestCase):
     def test_create_post(self):
         """Дополнительная проверка на загрузку не изображения."""
         image = SimpleUploadedFile(
-            name='none_image.py',
-            content=open('posts/tests/test_image/none_image.py', 'rb').read()
+            name='none_image',
+            content=(
+                b'\x47\x49\x46\x38\x39\x61\x02\x00'
+                b'\x01\x00\x80\x00\x00\x00\x00\x00'
+                b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+                b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+                b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+                b'\x0A\x00\x3B'),
+            content_type='image/gif'
         )
         form_data = {
             'text': 'Новый тестовый текст',
@@ -153,7 +160,13 @@ class PostFormTests(TestCase):
             response,
             'form',
             'image',
-            'Загрузите правильное изображение. '
-            'Файл, который вы загрузили, поврежден или не '
-            'является изображением.'
+            "Формат файлов '' не поддерживается. "
+            "Поддерживаемые форматы файлов: 'bmp, dib, gif, tif, "
+            "tiff, jfif, jpe, jpg, jpeg, pbm, pgm, ppm, pnm, png, "
+            "apng, blp, bufr, cur, pcx, dcx, dds, ps, eps, fit, "
+            "fits, fli, flc, ftc, ftu, gbr, grib, h5, hdf, jp2, "
+            "j2k, jpc, jpf, jpx, j2c, icns, ico, im, iim, mpg, "
+            "mpeg, mpo, msp, palm, pcd, pdf, pxr, psd, bw, rgb, "
+            "rgba, sgi, ras, tga, icb, vda, vst, webp, wmf, emf, "
+            "xbm, xpm'."
         )
