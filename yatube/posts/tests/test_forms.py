@@ -137,8 +137,7 @@ class PostFormTests(TestCase):
         """Дополнительная проверка на загрузку не изображения."""
         image = SimpleUploadedFile(
             name='none_image.py',
-            content=open('posts/tests/test_image/none_image.py', 'rb').read(),
-            content_type='text/py'
+            content=open('posts/tests/test_image/none_image.py', 'rb').read()
         )
         form_data = {
             'text': 'Новый тестовый текст',
