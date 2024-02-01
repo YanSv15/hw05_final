@@ -1,3 +1,55 @@
-# hw05_final
+# Социальная сеть YaTube
 
-[![CI](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml)
+В проекте реализованы следующие функции:
+
+добавление/удаление постов авторизованными пользователями
+редактирование постов только его автором
+возможность авторизованным пользователям оставлять комментарии к постам
+подписка/отписка на понравившихся авторов
+создание отдельной ленты с постами авторов, на которых подписан пользователь
+создание отдельной ленты постов по группам(тематикам)
+Подключены пагинация, кеширование, авторизация пользователя, возможна смена пароля через почту. Неавторизованному пользователю доступно только чтение. Покрытие тестами.
+
+# Запуск:
+
+# Клонировать репозиторий:
+  git clone https://github.com/DevCatRain/hw05_final.git
+
+# Перейти в него в командной строке:
+```python
+cd api_yamdb
+```
+# Cоздать и активировать виртуальное окружение:
+```python
+python -m venv venv
+```
+```python
+source venv/Scripts/activate
+```
+# Обновить менеджер пакетов:
+```python
+python -m pip install --upgrade pip
+```
+# Установить зависимости из файла requirements.txt:
+```python
+pip install -r requirements.txt
+```
+
+# Выполнить миграции:
+```python
+python manage.py migrate
+```
+
+# Запустить проект:
+```python
+python manage.py runserver
+```
+
+# Стек технологий:
+
+- Django 2.2
+- Python 3.9
+- Django Unittest
+- Django debug toolbar
+- PostgreSQL
+- Django ORM
